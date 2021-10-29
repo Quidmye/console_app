@@ -1,4 +1,5 @@
 Нужно запустить composer install
+
 Использовать: 
 ```
 php console.php list --trademark=QUERY
