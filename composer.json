@@ -1,0 +1,25 @@
+{
+    "name": "quidmy/console_parser",
+    "description": "HTML Parser",
+    "type": "project",
+    "license": "-",
+    "autoload": {
+        "psr-4": {
+            "core\\": "core",
+            "app\\": "app",
+            "Quidmy\\ConsoleParser\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Denis Koltsov",
+            "email": "markmaquire@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "rdlowrey/auryn": "dev-master",
+        "paquettg/php-html-parser": "dev-master",
+      "ext-json": "*"
+    }
+}
