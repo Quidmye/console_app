@@ -7,8 +7,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\TransferStats;
 use PHPHtmlParser\Dom;
-use PHPHtmlParser\Exceptions\ChildNotFoundException;
-use PHPHtmlParser\Exceptions\NotLoadedException;
 
 class IpaustraliaService{
 
