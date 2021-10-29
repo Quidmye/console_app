@@ -22,6 +22,9 @@ class IpaustraliaService{
         $this->dom = $dom;
     }
 
+    /*
+     * Парсинг результатов поиска
+     */
     public function getRecords($trademark, $page = null){
         $this->trademark = $trademark;
         if(is_null($this->pageUrl)){
@@ -55,6 +58,9 @@ class IpaustraliaService{
         return $results;
     }
 
+    /*
+     * Получение ссылки с результатами поиска
+     */
     private function getSearchUrl(){
         if(is_null($this->token)){
             $this->getToken();
@@ -76,6 +82,10 @@ class IpaustraliaService{
         $this->pageUrl = $url;
     }
 
+
+    /*
+     * Получение CSRF со страницы
+     */
     private function getToken(){
         $this->dom->loadFromUrl('https://search.ipaustralia.gov.au/trademarks/search/advanced');
         foreach ($this->dom->find('meta') as $meta){
