@@ -30,7 +30,7 @@ class IpaustraliaService{
         if(is_null($this->pageUrl)){
             $this->getSearchUrl();
         }
-        $i = is_null($page) ? 0 : intval($page);
+        $i = is_null($page) ? 0 : intval($page-1);
         $results = [];
         do{
             $url = $this->pageUrl . '&p=' . $i;
