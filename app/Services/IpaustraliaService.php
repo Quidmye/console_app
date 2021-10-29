@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\TransferStats;
 use PHPHtmlParser\Dom;
+use PHPHtmlParser\Exceptions\ChildNotFoundException;
+use PHPHtmlParser\Exceptions\NotLoadedException;
 
 class IpaustraliaService{
 
@@ -36,7 +38,7 @@ class IpaustraliaService{
             $url = $this->pageUrl . '&p=' . $i;
             $this->dom->loadFromUrl($url);
             $last = $this->dom->getElementsByClass('goto-last-page');
-            $lastPage = is_null($page) ? intval($last[0]->getAttribute('data-gotopage')) : $i;
+            $lastPage = is_null($page) && !is_null($last[0]) ? intval($last[0]->getAttribute('data-gotopage')) : $i;
             $records = $this->dom->getElementsByClass('mark-line');
             foreach ($records as $record){
                 $recordDom = new Dom();
