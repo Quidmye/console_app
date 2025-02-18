@@ -8,7 +8,8 @@ use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\TransferStats;
 use PHPHtmlParser\Dom;
 
-class IpaustraliaService{
+class IpaustraliaService
+{
 
     private $dom;
     private $client;
@@ -25,20 +26,21 @@ class IpaustraliaService{
     /*
      * Парсинг результатов поиска
      */
-    public function getRecords($trademark, $page = null){
+    public function getRecords($trademark, $page = null)
+    {
         $this->trademark = $trademark;
-        if(is_null($this->pageUrl)){
+        if (is_null($this->pageUrl)) {
             $this->getSearchUrl();
         }
-        $i = is_null($page) ? 0 : intval($page-1);
+        $i = is_null($page) ? 0 : intval($page - 1);
         $results = [];
-        do{
+        do {
             $url = $this->pageUrl . '&p=' . $i;
             $this->dom->loadFromUrl($url);
             $last = $this->dom->getElementsByClass('goto-last-page');
             $lastPage = is_null($page) && !is_null($last[0]) ? intval($last[0]->getAttribute('data-gotopage')) : $i;
             $records = $this->dom->getElementsByClass('mark-line');
-            foreach ($records as $record){
+            foreach ($records as $record) {
                 $recordDom = new Dom();
                 $recordDom->loadStr($record->innerHtml);
                 $img = $recordDom->find('img')[0];
@@ -54,15 +56,16 @@ class IpaustraliaService{
                 ];
             }
             $i++;
-        }while($i <= $lastPage);
+        } while ($i <= $lastPage);
         return $results;
     }
 
     /*
      * Получение ссылки с результатами поиска
      */
-    private function getSearchUrl(){
-        if(is_null($this->token)){
+    private function getSearchUrl()
+    {
+        if (is_null($this->token)) {
             $this->getToken();
         }
         $cookieJar = CookieJar::fromArray([
@@ -86,14 +89,15 @@ class IpaustraliaService{
     /*
      * Получение CSRF со страницы
      */
-    private function getToken(){
+    private function getToken()
+    {
         $this->dom->loadFromUrl('https://search.ipaustralia.gov.au/trademarks/search/advanced');
-        foreach ($this->dom->find('meta') as $meta){
-            if($meta->getAttribute('name') === '_csrf'){
+        foreach ($this->dom->find('meta') as $meta) {
+            if ($meta->getAttribute('name') === '_csrf') {
                 $this->token = $meta->getAttribute('content');
             }
         }
-        if(is_null($this->token)){
+        if (is_null($this->token)) {
             throw new ParserException('Token Not Found');
         }
     }
